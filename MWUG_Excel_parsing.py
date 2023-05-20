@@ -4,6 +4,12 @@ For when the title element didn't parse correctly, look where a word has a Capit
 if capital letter TRUE in middle of word, then split from there, that is where the title begins.
 
 check for when company website is missing
+
+Goals:
+1) correct any parsing troubles (Canadian entries mostly) here (unless have to be fixed in pdf_parsing.py)
+2) insert the data accordingly into preexisting excel worksheet in alphabetical order
+3) highlight newly added row in color pertaining to subscription status
+
 """
 import xlwings as xw
 
@@ -20,8 +26,8 @@ def reg_member_excel(reg_members):
                 if 'SYSTEM' not in j:
                     if 'CANADA' not in j:
                         print(reg_members[y_count])
-                        # have to deal with this in the pdf parsing file.
-
+                        # have to deal with this in the pdf parsing file., maybe append extra elem to temp_list
+                        # for the canadas just check in this file
             x = chr(ord('A') + x_count)
             y = str(1 + y_count)
             cell = x + y
