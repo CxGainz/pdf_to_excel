@@ -50,10 +50,19 @@ if __name__ == '__main__':
                 user_count = 0
                 last_user_data = 11
                 while user_count <= last_user_data:
+
                     temp_list.append(page_list[index + user_count])
+
                     if page_list[index + user_count + 1] == 'CANADA':
                         canada_flag = True
                         last_user_data = 12
+
+                    if user_count == 7 and page_list[index + user_count] != 'CANADA':
+                        if 'SYSTEM' not in page_list[index + user_count]:
+                            last_user_data = 10
+                            temp_list[-1] = "blank email"
+                            temp_list.append("")
+
                     user_count += 1
 
                 regular_members.append(temp_list[:])
