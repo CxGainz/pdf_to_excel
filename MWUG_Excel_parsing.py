@@ -12,20 +12,51 @@ Goals:
 
 """
 import xlwings as xw
+import re
 
 wb = xw.Book('mwug_test_file.xlsx')
 sheet = wb.sheets['Sheet1']
 
 
 def reg_member_excel(reg_members):
-    y_count = 0
+    y_count = 1
     for i in reg_members:
         x_count = 0
+        x = None
         for j in i:
-            x = chr(ord('A') + x_count)
+            if x_count == 0:
+                x = 'A'
+            elif x_count == 1:
+                x = 'N'
+            elif x_count == 2:
+                x = 'J'
+            elif x_count == 3:
+                x = 'I'
+            elif x_count == 4:
+                x = 'O'
+            elif x_count == 5:
+                x_count += 1
+                continue
+            elif x_count == 6:
+                x = 'D'
+            elif x_count == 7:
+                # ask whether adding a company email column is wanted
+                x_count += 1
+                continue
+            elif x_count == 8:
+                x_count += 1
+                continue
+            elif x_count == 9:
+                x = 'AB'
+            elif x_count == 10:
+                x = 'T'
+
             y = str(1 + y_count)
-            cell = x + y
-            sheet[cell].value = j
+
+            if x is not None:
+                cell = x + y
+                sheet[cell].value = j
+
             x_count += 1
 
         y_count += 1
