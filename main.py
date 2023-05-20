@@ -6,6 +6,7 @@ Should refactor for readability/efficiency and modularize/make functions. First 
 spreadsheet correctly
 """
 
+
 def extract_text_from_pdf(pdf_file: str) -> [str]:
     with open(pdf_file, 'rb') as pdf:
         reader = PyPDF2.PdfReader(pdf, strict=False)
@@ -64,8 +65,35 @@ if __name__ == '__main__':
                     index += 12
         # if the member is an associate member
         else:
-            # index 9 to the end of page contains the data we want in the pdf
-            print(page_list[9:])
+            # index 9 to the end of page contains the data we want in the pdf for associate members
+            index = 9
+            limit = len(page_list) - 10
+            while index < limit:
+                user_count = 0
+                last_user_data = 9
+                while user_count <= last_user_data:
+                    temp_list.append(page_list[index + user_count])
+                    if page_list[index + user_count] == 'CANADA':
+                        canada_flag = True
+                        last_user_data = 10
+
+                    user_count += 1
+
+                    if user_count == last_user_data:
+                        while 'Title:' not in page_list[index + user_count]:
+                            if 'Title' in page_list[index+user_count+1]:
+                                title_delim = page_list[index+user_count+1].split(".")
+                                temp_list.append(title_delim[len(title_delim)-1])
+
+                            user_count += 1
+
+                associate_members.append(temp_list[:])
+                temp_list.clear()
+
+                if canada_flag:
+                    canada_flag = False
+
+                index += user_count + 1
 
     print(associate_members)
     print(regular_members)
