@@ -47,7 +47,7 @@ if __name__ == '__main__':
             index = 11
             limit = len(page_list) - 12
             # originally did two for loops, but can't change the indices in for-loops (due to canada adding extra elem)
-            while index < (limit - 12):
+            while index < limit:
                 user_count = 0
                 last_user_data = 11
                 while user_count <= last_user_data:
