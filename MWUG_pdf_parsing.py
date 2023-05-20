@@ -28,6 +28,7 @@ if __name__ == '__main__':
     # used to be the inner list within the list of lists
     temp_list = []
     canada_flag = False
+    blank_flag = False
     for page in extracted_text:
         # for the information not preceded by a title, want to split them up somehow, join function?
         delims = "\n|          Connect | Email:| Phone:|Contact:| INFORMATION|      Users |  Midwest User Group   QAD \
@@ -61,6 +62,7 @@ if __name__ == '__main__':
                         if 'SYSTEM' not in page_list[index + user_count]:
                             last_user_data = 10
                             temp_list[-1] = "blank email"
+                            blank_flag = True
                             temp_list.append("")
 
                     user_count += 1
@@ -71,6 +73,9 @@ if __name__ == '__main__':
                 if canada_flag:
                     index += 13
                     canada_flag = False
+                elif blank_flag:
+                    index += 11
+                    blank_flag = False
                 else:
                     index += 12
         # if the member is an associate member
