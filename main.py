@@ -2,7 +2,8 @@ import PyPDF2
 import re
 
 """
-Should refactor for readability/efficiency and modularize/make functions. First get it to work.
+Should refactor for readability/efficiency and modularize/make functions. First get it to work and input into the excel
+spreadsheet correctly.
 """
 
 def extract_text_from_pdf(pdf_file: str) -> [str]:
