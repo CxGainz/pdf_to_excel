@@ -60,7 +60,7 @@ if __name__ == '__main__':
                     index += 12
         # if the member is an associate member
         else:
-            # index 9 to the end of page contains the data we want
+            # index 9 to the end of page contains the data we want in the pdf
             print(page_list[9:])
 
     print(associate_members)
