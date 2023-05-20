@@ -1,6 +1,9 @@
 import PyPDF2
 import re
 
+"""
+Should refactor for readability/efficiency. First get it to work.
+"""
 
 def extract_text_from_pdf(pdf_file: str) -> [str]:
     with open(pdf_file, 'rb') as pdf:
