@@ -23,7 +23,13 @@ def reg_member_excel(reg_members):
     for i in reg_members:
         x_count = 0
         x = None
+
+        if i[7] == 'CANADA':
+            i[4] = i[4] + ' CANADA'
+            i.pop(7)
+
         for j in i:
+            y = str(1 + y_count)
             if x_count == 0:
                 x = 'A'
             elif x_count == 1:
@@ -33,12 +39,39 @@ def reg_member_excel(reg_members):
             elif x_count == 3:
                 x = 'I'
             elif x_count == 4:
-                x = 'O'
+                # [start,end,step]
+                reverse_str = j[::-1]
+                space_index = reverse_str.find(" ")
+                last_word = j[-space_index-1:]
+                city = j[:-space_index-1]
+                state = last_word[:3]
+                if city[-3] == " ":
+                    if city[-2:].isalpha():
+                        state = city[-2:]
+                        city = city[:-3]
+
+                sheet['O' + y].value = city
+
+                if last_word[1:2].isalpha():
+                    sheet['Q' + y].value = last_word[3:]
+                else:
+                    sheet['Q' + y].value = last_word
+
+                sheet['P' + y].value = state
+
+                x_count += 1
+                continue
+
             elif x_count == 5:
                 x_count += 1
                 continue
             elif x_count == 6:
-                x = 'D'
+                delimited_list = re.split(",| ", j)
+                sheet['D' + y].value = delimited_list[1]
+                sheet['E' + y].value = delimited_list[2]
+                delimited_list.clear()
+                x_count += 1
+                continue
             elif x_count == 7:
                 # ask whether adding a company email column is wanted
                 x_count += 1
@@ -48,10 +81,18 @@ def reg_member_excel(reg_members):
                 continue
             elif x_count == 9:
                 x = 'AB'
+                j = j.replace("QAD Version:","")
             elif x_count == 10:
-                x = 'T'
-
-            y = str(1 + y_count)
+                x_count += 1
+                continue
+            elif x_count == 11:
+                delimited_list = re.split("Users:|Industry:", j)
+                if len(delimited_list) > 1:
+                    sheet['T' + y].value = delimited_list[1]
+                    sheet['F' + y].value = delimited_list[2]
+                delimited_list.clear()
+                x_count += 1
+                continue
 
             if x is not None:
                 cell = x + y
