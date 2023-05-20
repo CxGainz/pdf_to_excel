@@ -2,7 +2,7 @@ import PyPDF2
 import re
 
 """
-Should refactor for readability/efficiency. First get it to work.
+Should refactor for readability/efficiency and modularize. First get it to work.
 """
 
 def extract_text_from_pdf(pdf_file: str) -> [str]:
