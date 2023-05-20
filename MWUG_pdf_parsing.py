@@ -1,5 +1,6 @@
 import PyPDF2
 import re
+from MWUG_Excel_parsing import *
 
 """
 Should refactor for readability/efficiency and modularize/make functions. First get it to work and input into the excel
@@ -81,9 +82,9 @@ if __name__ == '__main__':
 
                     if user_count == last_user_data:
                         while 'Title:' not in page_list[index + user_count]:
-                            if 'Title' in page_list[index+user_count+1]:
-                                title_delim = page_list[index+user_count+1].split(".")
-                                temp_list.append(title_delim[len(title_delim)-1])
+                            if 'Title' in page_list[index + user_count + 1]:
+                                title_delim = page_list[index + user_count + 1].split(".")
+                                temp_list.append(title_delim[len(title_delim) - 1])
 
                             user_count += 1
 
@@ -97,3 +98,5 @@ if __name__ == '__main__':
 
     print(associate_members)
     print(regular_members)
+
+    reg_member_excel(regular_members)
