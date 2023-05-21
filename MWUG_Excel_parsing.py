@@ -88,8 +88,7 @@ def reg_member_excel(reg_members):
                 continue
             elif x_count == 7:
                 # ask whether adding a company email column is wanted
-                x_count += 1
-                continue
+                x = 'AJ'
             elif x_count == 8:
                 x_count += 1
                 continue
