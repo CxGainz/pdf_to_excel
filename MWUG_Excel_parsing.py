@@ -8,7 +8,7 @@ check for when company website is missing
 Goals:
 1) correct any parsing troubles (Canadian entries mostly) here (unless have to be fixed in pdf_parsing.py)
 2) insert the data accordingly into preexisting excel worksheet in alphabetical order
-3) highlight newly added row in color pertaining to subscription status
+3) highlight newly added row in color pertaining to subscription status (done)
 
 """
 import xlwings as xw
@@ -26,6 +26,7 @@ def reg_member_excel(reg_members):
         x = None
         y = str(1 + y_count)
 
+        # maybe can add elif if country not canada, just add it then pop.
         if i[7] == 'CANADA':
             country = 'CANADA'
             i.pop(7)
@@ -112,5 +113,8 @@ def reg_member_excel(reg_members):
                 sheet[cell].value = j
 
             x_count += 1
-
+            lower = 'A'+y
+            upper = ':AL'+y
+            comb = lower+upper
+            sheet.range(comb).color = (173, 216, 230)
         y_count += 1
