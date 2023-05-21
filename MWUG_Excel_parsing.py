@@ -10,6 +10,9 @@ Goals:
 2) insert the data accordingly into preexisting excel worksheet in alphabetical order (optional- excel builtins)
 3) highlight newly added row in color pertaining to subscription status (done)
 
+Note:
+    be careful with zip codes, excel auto drops zeros infront of number. must make the zip code cells text in excel
+    if can should set y_value to first row unfilled for better automation
 """
 import xlwings as xw
 import re
@@ -201,3 +204,8 @@ def associate_member_excel(associate_members, y):
                 cell = x + y_coord
                 sheet[cell].value = i[j]
         y += 1
+
+        lower = 'A' + y_coord
+        upper = ':AL' + y_coord
+        comb = lower + upper
+        sheet.range(comb).color = (255, 255, 143)
