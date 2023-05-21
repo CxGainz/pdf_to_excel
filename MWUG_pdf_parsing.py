@@ -1,6 +1,7 @@
+from MWUG_Excel_parsing import *
 import PyPDF2
 import re
-from MWUG_Excel_parsing import *
+
 
 """
 Should refactor for readability/efficiency and modularize/make functions. First get it to work and input into the excel
@@ -32,7 +33,7 @@ if __name__ == '__main__':
     for page in extracted_text:
         # for the information not preceded by a title, want to split them up somehow, join function?
         delims = "\n|          Connect | Email:| Phone:|Contact:| INFORMATION|      Users |  Midwest User Group   QAD \
-                 |Regular Members|MEMBER DIRECTORY|  Midwest User Group   QAD |Products & Services| E-Mail:"
+                 |Regular Members|MEMBER DIRECTORY|  Midwest User Group   QAD |Products & Services| E-Mail:|Phone:"
 
         page_list = re.split(delims, page)
         # break once we reach this keyword which is towards the end of the document passed essential user info
@@ -109,8 +110,6 @@ if __name__ == '__main__':
                     canada_flag = False
 
                 index += user_count + 1
-
-    print(associate_members)
-    print(regular_members)
-
-    reg_member_excel(regular_members)
+    print(associate_members[8])
+    y_count = reg_member_excel(regular_members)
+    associate_member_excel(associate_members, y_count+1)
