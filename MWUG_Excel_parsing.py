@@ -14,7 +14,7 @@ Goals:
 import xlwings as xw
 import re
 
-wb = xw.Book('mwug_test_file.xlsx')
+wb = xw.Book("mwug_test_file.xlsx")
 sheet = wb.sheets['Sheet1']
 
 
@@ -117,6 +117,7 @@ def reg_member_excel(reg_members):
             upper = ':AL' + y
             comb = lower + upper
             sheet.range(comb).color = (173, 216, 230)
+
         y_count += 1
     return y_count
 
@@ -125,6 +126,8 @@ def associate_member_excel(associate_members, y):
     for i in associate_members:
         canada_flag = False
         y_coord = str(y)
+        if i[2] == ')':
+            i.pop(2)
         if i[8] == 'CANADA':
             country = 'CANADA'
             i.pop(8)
@@ -138,22 +141,26 @@ def associate_member_excel(associate_members, y):
             if j == 0:
                 x = 'A'
             elif j == 1:
+                i[j].replace('(Box', "")
                 x = 'N'
             elif j == 2:
                 x = 'I'
             elif j == 3:
-                temp = i[j]
                 if canada_flag:
                     canada_flag = False
-                    sheet['Q' + y_coord].value = temp[-7:]
-                    sheet['P' + y_coord].value = temp[-9:-7]
-                    sheet['O' + y_coord].value = temp[:-9]
+                    sheet['Q' + y_coord].value = i[j][-7:]
+                    sheet['P' + y_coord].value = i[j][-9:-7]
+                    sheet['O' + y_coord].value = i[j][:-9]
                 else:
                     # [start,end,step]
                     reverse_str = i[j][::-1]
                     space_index = reverse_str.find(" ")
                     last_word = i[j][-space_index - 1:]
                     city = i[j][:-space_index - 1]
+                    if last_word[1].islower():
+                        city = city + last_word[1]
+                        last_word = last_word[2:]
+                        last_word = " " + last_word
                     state = last_word[:3]
                     if city[-3] == " ":
                         if city[-2:].isalpha():
@@ -183,7 +190,8 @@ def associate_member_excel(associate_members, y):
                 x = 'AJ'
             elif j == 9:
                 temp = re.split("Title:", i[j])
-                cell = 'F' + y_coord
+                x = 'F'
+                cell = x + y_coord
                 sheet[cell].value = temp
                 continue
             else:

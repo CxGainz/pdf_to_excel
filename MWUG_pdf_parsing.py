@@ -110,6 +110,9 @@ if __name__ == '__main__':
                     canada_flag = False
 
                 index += user_count + 1
-    print(associate_members[8])
+    print(associate_members[-5])
+    print(associate_members[-4:])
+    print(associate_members[-11])
+    print(regular_members[33:35])
     y_count = reg_member_excel(regular_members)
     associate_member_excel(associate_members, y_count+1)
