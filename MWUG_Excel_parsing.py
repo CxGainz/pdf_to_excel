@@ -21,15 +21,22 @@ sheet = wb.sheets['Sheet1']
 def reg_member_excel(reg_members):
     y_count = 1
     for i in reg_members:
+        canada_flag = False
         x_count = 0
         x = None
+        y = str(1 + y_count)
 
         if i[7] == 'CANADA':
-            i[4] = i[4] + ' CANADA'
+            country = 'CANADA'
             i.pop(7)
+            canada_flag = True
+        else:
+            country = 'United States'
+
+        sheet['AI' + y].value = country
 
         for j in i:
-            y = str(1 + y_count)
+
             if x_count == 0:
                 x = 'A'
             elif x_count == 1:
@@ -39,25 +46,31 @@ def reg_member_excel(reg_members):
             elif x_count == 3:
                 x = 'I'
             elif x_count == 4:
-                # [start,end,step]
-                reverse_str = j[::-1]
-                space_index = reverse_str.find(" ")
-                last_word = j[-space_index-1:]
-                city = j[:-space_index-1]
-                state = last_word[:3]
-                if city[-3] == " ":
-                    if city[-2:].isalpha():
-                        state = city[-2:]
-                        city = city[:-3]
-
-                sheet['O' + y].value = city
-
-                if last_word[1:2].isalpha():
-                    sheet['Q' + y].value = last_word[3:]
+                if canada_flag:
+                    canada_flag = False
+                    sheet['Q' + y].value = j[-7:]
+                    sheet['P' + y].value = j[-9:-7]
+                    sheet['O' + y].value = j[:-9]
                 else:
-                    sheet['Q' + y].value = last_word
+                    # [start,end,step]
+                    reverse_str = j[::-1]
+                    space_index = reverse_str.find(" ")
+                    last_word = j[-space_index-1:]
+                    city = j[:-space_index-1]
+                    state = last_word[:3]
+                    if city[-3] == " ":
+                        if city[-2:].isalpha():
+                            state = city[-2:]
+                            city = city[:-3]
 
-                sheet['P' + y].value = state
+                    sheet['O' + y].value = city
+
+                    if last_word[1:2].isalpha():
+                        sheet['Q' + y].value = last_word[3:]
+                    else:
+                        sheet['Q' + y].value = last_word
+
+                    sheet['P' + y].value = state
 
                 x_count += 1
                 continue
