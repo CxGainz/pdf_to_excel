@@ -5,7 +5,9 @@ import re
 
 """
 Should refactor for readability/efficiency and modularize/make functions. First get it to work and input into the excel
-spreadsheet correctly
+spreadsheet correctly.
+
+Note depends on whether this is the usual way of receiving data. Otherwise ask and make a script for the usual way.
 """
 
 

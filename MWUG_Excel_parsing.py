@@ -12,7 +12,7 @@ Goals:
 
 Note:
     be careful with zip codes, excel auto drops zeros infront of number. must make the zip code cells text in excel
-    if can should set y_value to first row unfilled for better automation
+    if can should set y_value to first row unfilled for better automation, however don't need to unless directly input
 """
 import xlwings as xw
 import re
