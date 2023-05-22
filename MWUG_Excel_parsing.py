@@ -24,12 +24,12 @@ sheet = wb.sheets['Sheet1']
 def reg_member_excel(reg_members):
     y_count = 1
     for i in reg_members:
-        sheet['C' + y].value = 'Y'
+
         canada_flag = False
         x_count = 0
         x = None
         y = str(1 + y_count)
-
+        sheet['B' + y].value = 'Y'
         # maybe can add elif if country not canada, just add it then pop.
         if i[7] == 'CANADA':
             country = 'CANADA'
@@ -130,7 +130,7 @@ def associate_member_excel(associate_members, y):
     for i in associate_members:
         canada_flag = False
         y_coord = str(y)
-        sheet['C' + y_coord].value = 'Y'
+        sheet['B' + y_coord].value = 'Y'
         if i[2] == ')':
             i.pop(2)
         if i[8] == 'CANADA':
