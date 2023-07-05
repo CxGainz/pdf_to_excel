@@ -4,10 +4,16 @@ import re
 
 
 """
-Should refactor for readability/efficiency and modularize/make functions. First get it to work and input into the excel
-spreadsheet correctly.
+PDF Parsing:
 
-Note depends on whether this is the usual way of receiving data. Otherwise ask and make a script for the usual way.
+PDF data is not the usual way we receive new customer entries. These scripts are incase we ever receieve them in PDF format again.
+The format of the text data from the PDF documents can be very inconsistent for each customer entry. If the customer is from 
+Canada or is missing certain criteria such as company email or phone number, we must account for these discrepancies as the format 
+of these extracted pdf text entries will vary.
+
+Note:
+     The first couple pages of the PDF contain unimportant information. We must use delimiters to only extract the data we want. 
+
 """
 
 
@@ -33,7 +39,7 @@ if __name__ == '__main__':
     canada_flag = False
     blank_flag = False
     for page in extracted_text:
-        # for the information not preceded by a title, want to split them up somehow, join function?
+        
         delims = "\n|          Connect | Email:| Phone:|Contact:| INFORMATION|      Users |  Midwest User Group   QAD \
                  |Regular Members|MEMBER DIRECTORY|  Midwest User Group   QAD |Products & Services| E-Mail:|Phone:"
 
@@ -112,9 +118,6 @@ if __name__ == '__main__':
                     canada_flag = False
 
                 index += user_count + 1
-    print(associate_members[-5])
-    print(associate_members[-4:])
-    print(associate_members[-11])
-    print(regular_members[33:35])
+   
     y_count = reg_member_excel(regular_members)
     associate_member_excel(associate_members, y_count+1)
