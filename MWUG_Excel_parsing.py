@@ -1,19 +1,19 @@
 """
-Excel parsing
-For when the title element didn't parse correctly, look where a word has a Capital letter in the middle of it,(
-if capital letter TRUE in middle of word, then split from there, that is where the title begins.
+Excel parsing:
 
-check for when company website is missing
+We make use of the xlwings library for inputting the newly formatted data into excel worksheets. We deal with regular
+members and associate members in this file. The library xlwings inputs data accordingly to excel cell coordinates 
+(such as [A7] or [Z8] for examples).
 
 Goals:
 1) correct any parsing troubles (Canadian entries mostly) here (unless have to be fixed in pdf_parsing.py)
 2) insert the data accordingly into preexisting excel worksheet in alphabetical order (optional- excel builtins)
-3) highlight newly added row in color pertaining to subscription status (done)
+3) highlight newly added row in color pertaining to subscription status
 
 Note:
-    be careful with zip codes, excel auto drops zeros infront of number. must make the zip code cells text in excel
-    if can should set y_value to first row unfilled for better automation, however don't need to unless directly input
+    Be careful with zip codes, Excel auto-drops zeros infront of numbers. Must make the zip code cells text in excel
 """
+
 import xlwings as xw
 import re
 
@@ -30,7 +30,6 @@ def reg_member_excel(reg_members):
         x = None
         y = str(1 + y_count)
         sheet['B' + y].value = 'Y'
-        # maybe can add elif if country not canada, just add it then pop.
         if i[7] == 'CANADA':
             country = 'CANADA'
             i.pop(7)
@@ -91,7 +90,6 @@ def reg_member_excel(reg_members):
                 x_count += 1
                 continue
             elif x_count == 7:
-                # ask whether adding a company email column is wanted
                 x = 'AJ'
                 j = j.replace("SYSTEM", "")
             elif x_count == 8:
